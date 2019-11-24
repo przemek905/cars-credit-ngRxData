@@ -1,0 +1,28 @@
+<p>car works!</p>
+<mat-card *ngFor="let car of cars$ | async" class="car-card mat-elevation-z10 car-panel">
+    <mat-card-header>
+        <mat-card-title>{{car.mark}} {{car.model}}</mat-card-title>
+    </mat-card-header>
+
+    <img  mat-card-image src= "http://bi.im-g.pl/im/37/e6/17/z25061943Q,Saab-9-3.jpg" alt="Car photo"> 
+
+    <mat-card-content>
+        <p>{{car.number}}</p>
+    </mat-card-content>
+
+    <mat-card-actions class="course-actions">
+
+        <button mat-raised-button color="primary">
+            VIEW
+        </button>
+
+      <button mat-mini-fab color="accent">
+        <mat-icon class="add-course-btn">edit</mat-icon>
+      </button>
+
+      <button mat-mini-fab color="warn">
+        <mat-icon class="add-course-btn">delete</mat-icon>
+      </button>
+
+    </mat-card-actions>
+</mat-card>
