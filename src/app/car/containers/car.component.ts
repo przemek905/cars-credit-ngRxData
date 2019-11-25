@@ -16,15 +16,7 @@ export class CarComponent implements OnInit {
   }
   
   ngOnInit() {
-    console.log("DUPA)");
     this.carEntityService.getAll();
   }
   
-  // ngAfterViewChecked(): void {
-  //   console.log(this.cars$.subscribe(
-  //     r => {
-  //       console.log(r);
-  //     }
-  //   ))
-  // }
 }
