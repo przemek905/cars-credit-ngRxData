@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CarEntityService } from '../store/services/car-entity.service';
-import { Observable } from 'rxjs';
-import { Car } from '../models/car';
 import { MatDialog } from '@angular/material';
-import { DeleteCarComponent } from './delete-confirmation/delete-car.component';
+import { Observable } from 'rxjs';
 import { defaultDialogConfig } from 'src/app/commons/default-dialog-config';
-import { debug } from 'util';
+import { Car } from '../models/car';
+import { CarEntityService } from '../store/services/car-entity.service';
+import { DeleteCarComponent } from './delete-confirmation/delete-car.component';
+import { AlertService } from 'src/app/commons/alerts';
 
 @Component({
   selector: 'app-car',
@@ -16,7 +16,8 @@ export class CarComponent implements OnInit {
   cars$: Observable<Car[]>;
   
   constructor(private carEntityService: CarEntityService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private alertService: AlertService) {
     this.cars$ = carEntityService.entities$;
   }
   
@@ -27,7 +28,9 @@ export class CarComponent implements OnInit {
   deleteCar(car: Car) {
     const dialogConfig = defaultDialogConfig();
     dialogConfig.data = {"car": car};
-    this.dialog.open(DeleteCarComponent, dialogConfig);
+    this.dialog.open(DeleteCarComponent, dialogConfig).afterClosed().subscribe(
+      () => this.alertService.success("Delete success")
+    );
   }
   
 }

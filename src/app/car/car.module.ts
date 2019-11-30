@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { DeleteCarComponent } from './containers/delete-confirmation/delete-car.component';
+import { AlertModule } from '../commons/alerts';
 
 // const defaultDataServiceConfig: DefaultDataServiceConfig = {
 //   root: "http://localhost:8081",
@@ -43,6 +44,7 @@ import { DeleteCarComponent } from './containers/delete-confirmation/delete-car.
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
+    AlertModule
   ],
   providers: [
     CarEntityService,
@@ -51,9 +53,9 @@ import { DeleteCarComponent } from './containers/delete-confirmation/delete-car.
   ]
 })
 export class CarModule {
-  constructor(private eds: EntityDefinitionService, 
-    private entityDataService: EntityDataService,
-    private carDataService: CarDataService
+  constructor(eds: EntityDefinitionService, 
+    entityDataService: EntityDataService,
+    carDataService: CarDataService
     ) {
       eds.registerMetadataMap(entityConfig);
       entityDataService.registerService('Car', carDataService);
