@@ -18,6 +18,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { DeleteCarComponent } from './containers/delete-confirmation/delete-car.component';
 
 // const defaultDataServiceConfig: DefaultDataServiceConfig = {
 //   root: "http://localhost:8081",
@@ -25,7 +26,8 @@ import {MatIconModule} from '@angular/material/icon';
 // }
 
 @NgModule({
-  declarations: [CarComponent],
+  declarations: [CarComponent, DeleteCarComponent],
+  entryComponents: [DeleteCarComponent],
   imports: [
     CommonModule,
     MatButtonModule,

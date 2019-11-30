@@ -3,7 +3,10 @@ import { Car } from '../models/car';
 
 const entityMetadata: EntityMetadataMap = {
     Car: {
-      selectId: (car: Car) => car.number
+      selectId: (car: Car) => car.number,
+      entityDispatcherOptions: {
+        optimisticDelete: false
+      }
     }
   };
    
