@@ -1,37 +1,21 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Input } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Alert, AlertType } from './alert.model';
-import { AlertService } from './alert.service';
+import { removeAlert } from './alerts.actions';
+import { AlertState } from './alerts.reducer';
+import { alertsSelector } from './alerts.selectors';
 
-//Taken from:
-//https://jasonwatmore.com/post/2019/07/05/angular-8-alert-toaster-notifications
 @Component({ selector: 'alert', templateUrl: 'alert.component.html' })
-export class AlertComponent implements OnInit, OnDestroy {
-    @Input() id: string;
+export class AlertComponent {
+    alerts$: Observable<Alert[]>;
 
-    alerts: Alert[] = [];
-    subscription: Subscription;
-
-    constructor(private alertService: AlertService) { }
-
-    ngOnInit() {
-        this.subscription = this.alertService.onAlert(this.id)
-            .subscribe(alert => {
-                if (!alert.message) {
-                    this.alerts = [];
-                    return;
-                }
-
-                this.alerts.push(alert);
-            });
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
+    constructor(private store: Store<AlertState>) { 
+        this.alerts$ = store.pipe(select(alertsSelector));
     }
 
     removeAlert(alert: Alert) {
-        this.alerts = this.alerts.filter(x => x !== alert);
+        this.store.dispatch(removeAlert({alert: alert}));
     }
 
     cssClass(alert: Alert) {

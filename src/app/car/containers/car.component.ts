@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Alert, AlertType } from 'src/app/commons/alerts';
+import { addAlert } from 'src/app/commons/alerts/alerts.actions';
+import { AlertState } from 'src/app/commons/alerts/alerts.reducer';
 import { defaultDialogConfig } from 'src/app/commons/default-dialog-config';
 import { Car } from '../models/car';
 import { CarEntityService } from '../store/services/car-entity.service';
 import { DeleteCarComponent } from './delete-confirmation/delete-car.component';
-import { AlertService } from 'src/app/commons/alerts';
 
 @Component({
   selector: 'app-car',
@@ -17,7 +20,7 @@ export class CarComponent implements OnInit {
   
   constructor(private carEntityService: CarEntityService,
     private dialog: MatDialog,
-    private alertService: AlertService) {
+    private store: Store<AlertState>) {
     this.cars$ = carEntityService.entities$;
   }
   
@@ -29,7 +32,7 @@ export class CarComponent implements OnInit {
     const dialogConfig = defaultDialogConfig();
     dialogConfig.data = {"car": car};
     this.dialog.open(DeleteCarComponent, dialogConfig).afterClosed().subscribe(
-      () => this.alertService.success("Delete success")
+      () => this.store.dispatch(addAlert({alert: new Alert({message: "Delete success", type: AlertType.Success})}))
     );
   }
   

@@ -2,7 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Car } from '../../models/car';
 import { CarEntityService } from '../../store/services/car-entity.service';
-import { AlertService } from 'src/app/commons/alerts';
+import { Store } from '@ngrx/store';
+import { AlertState } from 'src/app/commons/alerts/alerts.reducer';
+import { addAlert } from 'src/app/commons/alerts/alerts.actions';
+import { Alert, AlertType } from 'src/app/commons/alerts';
 
 @Component({
     selector: 'delete-car',
@@ -15,7 +18,7 @@ export class DeleteCarComponent {
     constructor(private dialogRef: MatDialogRef<DeleteCarComponent>,
         @Inject(MAT_DIALOG_DATA) data, 
         private carEntityService: CarEntityService,
-        private alertService: AlertService) {
+        private store: Store<AlertState>) {
         this.car = data.car;
     }
 
@@ -28,7 +31,7 @@ export class DeleteCarComponent {
                 this.dialogRef.close();
             },
             error => {
-                this.alertService.error("Error on delete");
+                this.store.dispatch(addAlert({alert: new Alert({message: "Error on delete", type: AlertType.Error})}))
                 console.log("ERROR while delte car: ", error);
             }
         )

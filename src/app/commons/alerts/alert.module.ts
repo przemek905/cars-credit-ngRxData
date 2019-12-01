@@ -1,13 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { AlertComponent } from './alert.component';
-import { AlertService } from './alert.service';
+import { AlertsEffect } from './alerts.effects';
+import { alertsReducer } from './alerts.reducer';
 
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [
+        CommonModule,
+        StoreModule.forFeature('alerts', alertsReducer),
+        EffectsModule.forFeature([AlertsEffect])
+    ],
     declarations: [AlertComponent],
     exports: [AlertComponent],
-    providers: [AlertService]
 })
 export class AlertModule { }
